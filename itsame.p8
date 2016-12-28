@@ -20,11 +20,13 @@ end
 function move()
  if btn(0) then
  	player.x-=3
+ 	anim.runstate=2
  	if player.x < 0 then
  	 player.x = 0
  	end
  elseif btn(1) then
  	player.x+=3
+ 	anim.runstate=1
  	if player.x > 127 then
  	 player.x = 128
  	end
