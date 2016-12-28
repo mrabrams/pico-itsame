@@ -46,6 +46,7 @@ end
 
 function _draw()
  rectfill(0,0,128,128,14)
+	rectfill(0,120,128,128,2)
  spr(anim.runstate,player.x,player.y)
 	for cloud in all(clouds) do
 		circfill(cloud.x+shadowx,cloud.y+shadowy,cloud.r,2)
@@ -65,8 +66,8 @@ function move()
  elseif btn(1) then
  	player.x+=3
  	anim.runstate=1
- 	if player.x > 127 then
- 	 player.x = 128
+ 	if player.x > 119 then
+ 	 player.x = 120
  	end
  end
 end
