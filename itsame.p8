@@ -17,17 +17,6 @@ function _draw()
  spr(anim.runstate,player.x,player.y)
 end
 
-function frameswitch()
- anim.frame+=1
- if anim.frame == 1 then
-  anim.runstate = 1
- elseif anim.frame >= 3 and anim.frame <= 6 then
-  anim.runstate = 2
- elseif anim.frame >= 6 then
-  anim.frame = 0 
- end
-end
-
 function move()
  if btn(0) then
  	player.x-=3
