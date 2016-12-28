@@ -5,7 +5,6 @@ __lua__
 player={x=0,y=112,dx=0,dy=0}
 anim={runstate=1,frame=0}
 
--- cloud vars
 clouds={}
 speed=30					-- y speed
 maxy=20						-- cloud max x pos
@@ -15,28 +14,25 @@ shadowx=2    -- shadow x offset
 shadowy=8    -- shadow y offset
 
 function _init()
-cls()
-
---clouds
+ cls()
 	for i=0,42 do
 		addcloud(rnd(128))
 	end
 end
 
 function addcloud(xpos) -- clouds
-		c={}
-		c.x=xpos
-		c.y=rnd(maxy)-maxy/2
-		c.r=rnd(maxradius-minradius)+minradius
-		add(clouds,c)
+	c={}
+	c.x=xpos
+	c.y=rnd(maxy)-maxy/2
+	c.r=rnd(maxradius-minradius)+minradius
+	add(clouds,c)
 end
 
 
 function _update()
 	cls()
  move()
- --clouds
- 	for cloud in all(clouds) do
+	for cloud in all(clouds) do
 		cloud.x+=speed/30
 		-- delete clouds that are not visible anymore
 		-- and remplace them by a new random cloud
@@ -49,17 +45,14 @@ function _update()
 end
 
 function _draw()
+ rectfill(0,0,128,128,14)
  spr(anim.runstate,player.x,player.y)
-	-- clouds
-	-- draw shadows first
 	for cloud in all(clouds) do
-		circfill(cloud.x+shadowx,cloud.y+shadowy,cloud.r,1)
+		circfill(cloud.x+shadowx,cloud.y+shadowy,cloud.r,2)
 	end
-	-- draw clouds
 	for cloud in all(clouds) do	
 		circfill(cloud.x,cloud.y,cloud.r,7)
 	end
-
 end
 
 function move()
