@@ -1,20 +1,65 @@
 pico-8 cartridge // http://www.pico-8.com
 version 8
 __lua__
+-- †ame vars
 player={x=0,y=112,dx=0,dy=0}
 anim={runstate=1,frame=0}
 
+-- cloud vars
+clouds={}
+speed=30					-- y speed
+maxy=20						-- cloud max x pos
+maxradius=10 -- cloud max radius
+minradius=4  -- cloud min radius
+shadowx=2    -- shadow x offset
+shadowy=8    -- shadow y offset
+
 function _init()
 cls()
+
+--clouds
+	for i=0,42 do
+		addcloud(rnd(128))
+	end
 end
+
+function addcloud(xpos) -- clouds
+		c={}
+		c.x=xpos
+		c.y=rnd(maxy)-maxy/2
+		c.r=rnd(maxradius-minradius)+minradius
+		add(clouds,c)
+end
+
 
 function _update()
 	cls()
  move()
+ --clouds
+ 	for cloud in all(clouds) do
+		cloud.x+=speed/30
+		-- delete clouds that are not visible anymore
+		-- and remplace them by a new random cloud
+		if cloud.x-cloud.r > 128 then
+			del(clouds,cloud)
+			-- add new cloud outside the screen
+			addcloud(-(rnd(128) + maxradius))
+		end
+	end
 end
 
 function _draw()
  spr(anim.runstate,player.x,player.y)
+	-- clouds
+	-- draw shadows first
+	for cloud in all(clouds) do
+		circfill(cloud.x+shadowx,cloud.y+shadowy,cloud.r,1)
+	end
+	-- draw clouds
+	for cloud in all(clouds) do	
+		circfill(cloud.x,cloud.y,cloud.r,7)
+	end
+
 end
 
 function move()
